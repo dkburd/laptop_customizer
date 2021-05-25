@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Option from "./Option";
 import Feature from "./Feature";
 import slugify from "slugify";
+import Features from "./Features";
 
 class FeatureList extends Component {
   render() {

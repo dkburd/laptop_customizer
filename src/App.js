@@ -8,21 +8,21 @@ import "./App.css";
 import Header from "./Header";
 import Cart from "./Cart";
 import FeatureList from "./FeatureList";
-import Features from "./Features";
+import FEATURES from "./Features";
 // back to here if it gets messed up
 
 // This object will allow us to
 // easily convert numbers into US dollar values
 
 // moved to/used in Total and Option
-const USCurrencyFormat = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
+// const USCurrencyFormat = new Intl.NumberFormat("en-US", {
+//   style: "currency",
+//   currency: "USD",
+// });
 
 class App extends Component {
   // state = {
-  // moved to Features and adjusted below:
+  // also moved to Features:
 
   //   selected: {
   //     Processor: {
@@ -45,7 +45,6 @@ class App extends Component {
   // };
 
   // replace with constructor:
-
   constructor(props) {
     super(props);
     this.state = {
@@ -79,56 +78,56 @@ class App extends Component {
   };
 
   render() {
-    const features = Object.keys(this.props.features).map((feature, idx) => {
-      const featureHash = feature + "-" + idx;
-      const options = this.props.features[feature].map((item) => {
-        const itemHash = slugify(JSON.stringify(item));
-        return (
-          <div key={itemHash} className="feature__item">
-            <input
-              type="radio"
-              id={itemHash}
-              className="feature__option"
-              name={slugify(feature)}
-              checked={item.name === this.state.selected[feature].name}
-              onChange={(e) => this.updateFeature(feature, item)}
-            />
-            <label htmlFor={itemHash} className="feature__label">
-              {item.name} ({USCurrencyFormat.format(item.cost)})
-            </label>
-          </div>
-        );
-      });
+    // const features = Object.keys(this.props.features).map((feature, idx) => {
+    //   const featureHash = feature + "-" + idx;
+    //   const options = this.props.features[feature].map((item) => {
+    //     const itemHash = slugify(JSON.stringify(item));
+    //     return (
+    //       <div key={itemHash} className="feature__item">
+    //         <input
+    //           type="radio"
+    //           id={itemHash}
+    //           className="feature__option"
+    //           name={slugify(feature)}
+    //           checked={item.name === this.state.selected[feature].name}
+    //           onChange={(e) => this.updateFeature(feature, item)}
+    //         />
+    //         <label htmlFor={itemHash} className="feature__label">
+    //           {item.name} ({USCurrencyFormat.format(item.cost)})
+    //         </label>
+    //       </div>
+    //     );
+    //   });
 
-      return (
-        <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">
-            <h3>{feature}</h3>
-          </legend>
-          {options}
-        </fieldset>
-      );
-    });
+    //   return (
+    //     <fieldset className="feature" key={featureHash}>
+    //       <legend className="feature__name">
+    //         <h3>{feature}</h3>
+    //       </legend>
+    //       {options}
+    //     </fieldset>
+    //   );
+    // });
 
-    const summary = Object.keys(this.state.selected).map((feature, idx) => {
-      const featureHash = feature + "-" + idx;
-      const selectedOption = this.state.selected[feature];
+    // const summary = Object.keys(this.state.selected).map((feature, idx) => {
+    //   const featureHash = feature + "-" + idx;
+    //   const selectedOption = this.state.selected[feature];
 
-      return (
-        <div className="summary__option" key={featureHash}>
-          <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">{selectedOption.name}</div>
-          <div className="summary__option__cost">
-            {USCurrencyFormat.format(selectedOption.cost)}
-          </div>
-        </div>
-      );
-    });
+    //   return (
+    //     <div className="summary__option" key={featureHash}>
+    //       <div className="summary__option__label">{feature} </div>
+    //       <div className="summary__option__value">{selectedOption.name}</div>
+    //       <div className="summary__option__cost">
+    //         {USCurrencyFormat.format(selectedOption.cost)}
+    //       </div>
+    //     </div>
+    //   );
+    // });
 
-    const total = Object.keys(this.state.selected).reduce(
-      (acc, curr) => acc + this.state.selected[curr].cost,
-      0
-    );
+    // const total = Object.keys(this.state.selected).reduce(
+    //   (acc, curr) => acc + this.state.selected[curr].cost,
+    //   0
+    // );
 
     return (
       <div className="App">
@@ -137,10 +136,16 @@ class App extends Component {
         </header> */}
         <Header />
         <main>
-          <form className="main__form">
+          <FeatureList
+            selected={this.state.selected}
+            features={FEATURES}
+            updateFeature={this.updateFeature}
+          />
+          {/* form moved to FeatureList */}
+          {/* <form className="main__form">
             <h2>Customize your laptop</h2>
             {features}
-          </form>
+          </form> */}
           {/* section moved to cart:  */}
           {/* <section className="main__summary">
             <h2>Your cart</h2>
